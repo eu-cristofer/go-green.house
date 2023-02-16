@@ -57,15 +57,8 @@
      margin-right: auto;
   }
   
-  header {
-      width: 270px;
-      float: left;
-      position: fixed;
-    }
-  
   section {
       width: 500px;
-      float: right;
       padding-bottom:50px;
   }
   

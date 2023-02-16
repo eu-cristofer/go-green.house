@@ -5,23 +5,14 @@
 </head>
 <html>
     <body>
-        <div class="wrapper">
-			<header>
-				<h1 class="first"><a href="https://cristofer.me">Garotinhas</a></h1>
-
-				<p class="justify">Pagina delas</p>
-
-			</header>
-
-			<section>
-                <h1>Crescimento</h1>
-                <p>Acompanhamento dos indicadores.</p>
-                <div id="tester" style="width:800px;height:600px;"></div>
-                <script>
-                    TESTER = document.getElementById('tester');
-                    Plotly.newPlot( TESTER, peso_data, peso_layout);
-                </script>
-            </section>
-        </div>
+        <section>
+            <h1>Crescimento das Garotinhas</h1>
+            <p>Acompanhamento dos indicadores.</p>
+            <div id="tester" style="width:800px;height:600px;"></div>
+            <script>
+                TESTER = document.getElementById('tester');
+                Plotly.newPlot( TESTER, peso_data, peso_layout);
+            </script>
+        </section>
     </body>
 </html>
