@@ -141,12 +141,12 @@ def plot_df(df, description, months_to_plot = 12):
                     y=sofia[description].values,
                     mode='markers',
                     name='Sofia',
-                    marker=dict(size=20))
+                    marker=dict(size=10))
     fig.add_scatter(x=maria.index,
                     y=maria[description].values,
                     mode='markers',
                     name='Maria',
-                    marker=dict(size=20))
+                    marker=dict(size=10))
 
     fig.update_layout(autosize=False,
                       width=800,
@@ -161,7 +161,8 @@ def plot_df(df, description, months_to_plot = 12):
                                   x=0.01))
     if __name__ != '__main__':
         fig.show()
-    return fig
+    else:
+        return fig
     
     
 if __name__ == '__main__':
