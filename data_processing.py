@@ -46,10 +46,6 @@ source = dict()
 source['wfa_z'] = pd.read_excel('ref/wfa_girls_0-to-5-years_zscores.xlsx',
                                 index_col=0)
 
-# Girls table- Weight-for-age: Birth to 5 years (percentiles)
-source['wfa_p'] = pd.read_excel('ref/tab_wfa_girls_p_0_5.xlsx',
-                                index_col=0)
-
 # Girls table- Head circumference for age: Birth to 5 years (z-scores)
 source['hcfa_z'] = pd.read_excel('ref/hcfa-girls-0-5-zscores.xlsx',
                                  index_col=0)
@@ -57,10 +53,6 @@ source['hcfa_z'] = pd.read_excel('ref/hcfa-girls-0-5-zscores.xlsx',
 # Girls table- Length-for-age: Birth to 2 years (z-scores)
 source['lfa_birth_z'] = pd.read_excel('ref/lhfa_girls_0-to-2-years_zscores.xlsx',
                                       index_col=0)
-
-# Girls table- Height-for-age: 2 to 5 years (z-scores)
-source['lfa_2to5_z'] = pd.read_excel('ref/bmi_girls_2-to-5-years_zscores.xlsx',
-                                     index_col=0)
 
 # Binding index in months delta and data from birth
 source_index = {i : birth + i * pd.DateOffset(months=1)
@@ -83,7 +75,7 @@ def plot_df(df, description, months_to_plot = 12):
 
     Returns
     -------
-    None.
+    plotly.graph_objects.Figure
 
     '''
     fig = go.Figure()
@@ -139,30 +131,51 @@ def plot_df(df, description, months_to_plot = 12):
                        y=df.SD0.loc[months_to_plot],
                        text="0",
                        showarrow=False)
-
+    
+    legend = {'Peso' : 'Peso em [kg]',
+              'Perímetro Cefálico' : 'Perimetro Cefalico [cm]',
+              'Estatura' : 'Estatura [cm]'}
+    
     # Girls data
     fig.add_scatter(x=sofia.index,
-                    y=sofia['Peso'].values,
+                    y=sofia[description].values,
                     mode='markers',
-                    name='Sofia')
+                    name='Sofia',
+                    marker=dict(size=20))
     fig.add_scatter(x=maria.index,
-                    y=maria['Peso'].values,
+                    y=maria[description].values,
                     mode='markers',
-                    name='Maria')
+                    name='Maria',
+                    marker=dict(size=20))
 
     fig.update_layout(autosize=False,
                       width=800,
                       height=600,
-                      title='Evolução do peso',
+                      title=description,
                       title_x=0.5,
-                      xaxis=dict(title_text="Meses Completos"),
-                      yaxis=dict(title_text="Peso [kg]"),
+                      xaxis=dict(title_text="Meses"),
+                      yaxis=dict(title_text=legend[description]),
                       legend=dict(yanchor="top",
                                   xanchor="left",
                                   y=0.98,
                                   x=0.01))
     fig.show()
+    return fig
     
     
 if __name__ == '__main__':
-    plot_df(source['wfa_z'], dscription = "Peso")
+    import plotly.io as pio
+    with open('template.html', 'r') as html:
+        file = html.read()
+    
+    for i,j in zip(source.keys(),
+                   ['Peso', 'Perímetro Cefálico', 'Estatura']):
+        chart = plot_df(source[i], j)
+        json_file = pio.to_json(chart)
+        str_data = json.dumps(json.loads(json_file)['data'])
+        str_layout = json.dumps(json.loads(json_file)['layout'])
+        file = file.replace(j.upper() + '_DATA', str_data)
+        file = file.replace(j.upper() + '_LAYOUT', str_layout)
+        
+    with open('index.html', 'w') as html:
+        html.write(file)
