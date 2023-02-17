@@ -159,7 +159,8 @@ def plot_df(df, description, months_to_plot = 12):
                                   xanchor="left",
                                   y=0.98,
                                   x=0.01))
-    fig.show()
+    if __name__ != '__main__':
+        fig.show()
     return fig
     
     
