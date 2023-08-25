@@ -14,9 +14,9 @@ import plotly.graph_objects as go
    Reading girls data
 '''
 birth = pd.Timestamp('2022-10-16')
-with open("DB_Sofia.json", "r") as file:
+with open("DB_Sofia.json", "r", encoding="utf8") as file:
     DB_sofia = json.load(file)
-with open("DB_Maria.json", "r") as file:
+with open("DB_Maria.json", "r", encoding="utf8") as file:
     DB_maria = json.load(file)
     
 sofia = pd.DataFrame.from_dict(DB_sofia,
@@ -167,7 +167,7 @@ def plot_df(df, description, months_to_plot = 12):
     
 if __name__ == '__main__':
     import plotly.io as pio
-    with open('template.html', 'r') as html:
+    with open('template.html', 'r', encoding="utf8") as html:
         file = html.read()
     
     for i,j in zip(source.keys(),
