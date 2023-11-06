@@ -172,7 +172,7 @@ if __name__ == '__main__':
     
     for i,j in zip(source.keys(),
                    ['Peso', 'Perímetro Cefálico', 'Estatura']):
-        chart = plot_df(source[i], j)
+        chart = plot_df(source[i], j, 13)
         json_file = pio.to_json(chart)
         str_data = json.dumps(json.loads(json_file)['data'])
         str_layout = json.dumps(json.loads(json_file)['layout'])
