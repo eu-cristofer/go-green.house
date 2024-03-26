@@ -13,28 +13,44 @@ import plotly.graph_objects as go
 '''
    Reading girls data
 '''
-birth = pd.Timestamp('2022-10-16')
-with open("DB_Sofia.json", "r", encoding="utf8") as file:
-    DB_sofia = json.load(file)
-with open("DB_Maria.json", "r", encoding="utf8") as file:
-    DB_maria = json.load(file)
-    
-sofia = pd.DataFrame.from_dict(DB_sofia,
-                               orient='index')
-maria = pd.DataFrame.from_dict(DB_maria,
-                               orient='index')
-'''
-   Binding indexes for Sofia and Maria DB
-   The indexes (date of doctors visit) is read as datetime 
-   and then converted to timedelta from birth datein months
-   (since the reference tables are indexed in months).
-'''
-gar_index = pd.to_datetime(sofia.index)
-gar_delta_index = (gar_index - gar_index[-1])/np.timedelta64(1, 'M')
+birth = pd.Timestamp('2022-10-16 11:48:00')
 
-# Appling the new index
-sofia.index = gar_delta_index
-maria.index = gar_delta_index
+def get_json_data(database):
+    '''
+        This function aims to load and process the json databse data
+        and return a pandas.DataFrame.
+        
+        Parameters
+        ----------
+        database : str
+            String with the name of the json database with baby data.
+    
+        Returns
+        -------
+        df : ps.DataFrame
+            DataFrame with index as pd.date_time and a column with the 
+            a timedelta of months considering the first data in the 
+            series.
+
+    '''
+    # Reading the data from the json database
+    with open(database, "r", encoding="utf8") as file:
+        json_data = json.load(file)
+    
+    # Convert it to a DataFrame
+    df = pd.DataFrame.from_dict(json_data,
+                                orient='index')
+    # Convert the index to pd.Datatime
+    df.index = pd.to_datetime(df.index)
+    
+    # Creating a column with timedelta in months from first sample
+    df['Months'] = (df.index - df.index[-1])/np.timedelta64(1, 'M')
+    return df
+
+
+sofia = get_json_data("DB_Sofia.json")
+maria = get_json_data("DB_Maria.json")
+
 
 '''
    Reading reference data
@@ -137,12 +153,12 @@ def plot_df(df, description, months_to_plot = 12):
               'Estatura' : 'Estatura [cm]'}
     
     # Girls data
-    fig.add_scatter(x=sofia.index,
+    fig.add_scatter(x=sofia["Months"],
                     y=sofia[description].values,
                     mode='markers',
                     name='Sofia',
                     marker=dict(size=10))
-    fig.add_scatter(x=maria.index,
+    fig.add_scatter(x=maria["Months"],
                     y=maria[description].values,
                     mode='markers',
                     name='Maria',
