@@ -3,6 +3,8 @@
   }
   
   body {
+    display: flex;
+    justify-content: center;
     padding: 50px;
     background: #fff;
     color: #595959;
@@ -70,6 +72,14 @@
       -webkit-font-smoothing:subpixel-antialiased
   }
   
+  .container {
+    width: 900px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
   .wrapper {
     width: 860px;
     margin:0 auto

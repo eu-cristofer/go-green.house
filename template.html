@@ -5,24 +5,26 @@
 </head>
 <html>
     <body>
-        <section>
-            <h1>Crescimento das Garotinhas</h1>
-            <p>Acompanhamento dos indicadores.</p>
-            <div id="tester" style="width:800px;height:600px;"></div>
-            <script>
-                TESTER = document.getElementById('tester');
-                Plotly.newPlot( TESTER, PESO_DATA, PESO_LAYOUT);
-            </script>
-            <div id="tester1" style="width:800px;height:600px;"></div>
-            <script>
-                TESTER = document.getElementById('tester1');
-                Plotly.newPlot( TESTER, PERÍMETRO CEFÁLICO_DATA, PERÍMETRO CEFÁLICO_LAYOUT);
-            </script>
-            <div id="tester2" style="width:800px;height:600px;"></div>
-            <script>
-                TESTER = document.getElementById('tester2');
-                Plotly.newPlot( TESTER, ESTATURA_DATA, ESTATURA_LAYOUT);
-            </script>
-        </section>
+        <div class="container">
+                <section>
+                <h1>Crescimento das Garotinhas</h1>
+                <p>Acompanhamento dos indicadores.</p>
+                <div id="tester" style="width:800px;height:600px;"></div>
+                <script>
+                    TESTER = document.getElementById('tester');
+                    Plotly.newPlot( TESTER, PESO_DATA, PESO_LAYOUT);
+                </script>
+                <div id="tester1" style="width:800px;height:600px;"></div>
+                <script>
+                    TESTER = document.getElementById('tester1');
+                    Plotly.newPlot( TESTER, PERÍMETRO CEFÁLICO_DATA, PERÍMETRO CEFÁLICO_LAYOUT);
+                </script>
+                <div id="tester2" style="width:800px;height:600px;"></div>
+                <script>
+                    TESTER = document.getElementById('tester2');
+                    Plotly.newPlot( TESTER, ESTATURA_DATA, ESTATURA_LAYOUT);
+                </script>
+            </section> 
+        </div>             
     </body>
 </html>
