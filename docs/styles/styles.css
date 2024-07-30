@@ -3,8 +3,6 @@
   }
   
   body {
-    display: flex;
-    justify-content: center;
     padding: 50px;
     background: #fff;
     color: #595959;
@@ -16,6 +14,12 @@
   
   h1.first{
     margin: 0 0 20px;
+  }
+
+  img.logo {
+    vertical-align: middle;
+    width: 80%;
+    height: 80%
   }
   
   nav {
@@ -58,9 +62,24 @@
      margin-left: auto;
      margin-right: auto;
   }
+
+  div.box {
+    color: blue;
+    width:100%;
+    background: rgb(204,204,255);
+    padding: 0.5em;
+    border: none;
+  }
+  
+  header {
+      width: 270px;
+      float: left;
+      position: fixed;
+    }
   
   section {
       width: 500px;
+      float: right;
       padding-bottom:50px;
   }
   
