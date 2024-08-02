@@ -71,10 +71,10 @@
     border: none;
   }
   
-  header {
-      width: 270px;
-      float: left;
-      position: fixed;
+  header { 
+    width: 270px;
+    float: left;
+    position: fixed;
     }
   
   section {
