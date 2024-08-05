@@ -17,17 +17,16 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install jupyter-book ghp-import
-
+          pip install jupyter-book
       - name: Build the book
         run: jupyter-book build .
-
       - name: Deploy to GitHub Pages
-        run: |
-          ghp-import -n -p -f _build/html
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_build/html
+          publish_branch: gh-pages
+          keep_files: false
