@@ -3,3 +3,5 @@
 
 format: jb-book
 root: content/main_script
+chapters:
+- file: content/sources
