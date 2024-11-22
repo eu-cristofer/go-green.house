@@ -48,6 +48,10 @@ def get_json_data(database):
 sofia = get_json_data("DB_Sofia.json")
 maria = get_json_data("DB_Maria.json")
 
+# Define the number of months to plot based on the database
+delta = sofia.index[0] - birth
+months_to_plot = int(round(delta.days/30.43,0))
+
 # Read reference data from Excel files
 # Source: https://www.who.int/tools/child-growth-standards/standards/weight-for-age
 source = dict()
@@ -91,7 +95,7 @@ def plot_df(df, description, months_to_plot=12):
         showlegend=False,
     )
     fig.add_annotation(
-        x=months_to_plot, y=df.SD3neg.loc[months_to_plot], text="-3", showarrow=False
+        x=months_to_plot+1, y=df.SD3neg.loc[months_to_plot], text="-3", showarrow=False
     )
 
     fig.add_scatter(
@@ -103,7 +107,7 @@ def plot_df(df, description, months_to_plot=12):
         showlegend=False,
     )
     fig.add_annotation(
-        x=months_to_plot, y=df.SD3.loc[months_to_plot], text="3", showarrow=False
+        x=months_to_plot+1, y=df.SD3.loc[months_to_plot], text="3", showarrow=False
     )
 
     fig.add_scatter(
@@ -115,7 +119,7 @@ def plot_df(df, description, months_to_plot=12):
         showlegend=False,
     )
     fig.add_annotation(
-        x=months_to_plot, y=df.SD2neg.loc[months_to_plot], text="-2", showarrow=False
+        x=months_to_plot+1, y=df.SD2neg.loc[months_to_plot], text="-2", showarrow=False
     )
 
     fig.add_scatter(
@@ -127,7 +131,7 @@ def plot_df(df, description, months_to_plot=12):
         showlegend=False,
     )
     fig.add_annotation(
-        x=months_to_plot, y=df.SD2.loc[months_to_plot], text="2", showarrow=False
+        x=months_to_plot+1, y=df.SD2.loc[months_to_plot], text="2", showarrow=False
     )
 
     fig.add_scatter(
@@ -139,7 +143,7 @@ def plot_df(df, description, months_to_plot=12):
         showlegend=False,
     )
     fig.add_annotation(
-        x=months_to_plot, y=df.SD0.loc[months_to_plot], text="0", showarrow=False
+        x=months_to_plot+1, y=df.SD0.loc[months_to_plot], text="0", showarrow=False
     )
 
     # Dictionary for legend text
@@ -177,28 +181,3 @@ def plot_df(df, description, months_to_plot=12):
         legend=dict(yanchor="top", xanchor="left", y=0.98, x=0.01),
     )
     return fig
-
-
-if __name__ == '__main__':
-    import plotly.io as pio
-    
-    # Read the HTML template
-    with open('docs/template.html', 'r', encoding="utf8") as html:
-        file = html.read()
-    
-    # Iterate over the keys and labels of the source dictionary
-    for key, label in zip(source.keys(), ['Peso', 'Perímetro Cefálico', 'Estatura']):
-        # Generate the plot for each reference data
-        chart = plot_df(source[key], label, 22)
-        # Convert the plotly chart to JSON format
-        json_file = pio.to_json(chart)
-        # Extract the data and layout from the JSON file
-        str_data = json.dumps(json.loads(json_file)['data'])
-        str_layout = json.dumps(json.loads(json_file)['layout'])
-        # Replace the placeholders in the template with the actual data and layout
-        file = file.replace(label.upper() + '_DATA', str_data)
-        file = file.replace(label.upper() + '_LAYOUT', str_layout)
-        
-    # Write the modified HTML content to the output file
-    with open('docs/index.html', 'w', encoding="utf8") as html:
-        html.write(file)
