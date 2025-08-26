@@ -85,66 +85,30 @@ def plot_df(df, description, months_to_plot=12):
     """
     fig = go.Figure()
 
-    # Add reference curves to the plot
-    fig.add_scatter(
-        x=df.index,
-        y=df.SD3neg.loc[:months_to_plot].values,
-        mode="lines",
-        name="-3",
-        line={"color": "rgba(241, 148, 138, 0.5)"},
-        showlegend=False,
-    )
-    fig.add_annotation(
-        x=months_to_plot+1, y=df.SD3neg.loc[months_to_plot], text="-3", showarrow=False
-    )
+    # Define reference curves with their properties
+    reference_curves = {
+        'SD3neg': {'color': 'rgba(241, 148, 138, 0.5)', 'label': '-3'},
+        'SD3': {'color': 'rgba(241, 148, 138, 0.5)', 'label': '3'},
+        'SD2neg': {'color': 'rgba(52, 152, 219, 0.5)', 'label': '-2'},
+        'SD2': {'color': 'rgba(52, 152, 219, 0.5)', 'label': '2'},
+        'SD0': {'color': 'rgba(26, 188, 156, 0.5)', 'label': '0'}
+    }
 
-    fig.add_scatter(
-        x=df.index,
-        y=df.SD3.loc[:months_to_plot].values,
-        mode="lines",
-        name="3",
-        line={"color": "rgba(241, 148, 138, 0.5)"},
-        showlegend=False,
-    )
-    fig.add_annotation(
-        x=months_to_plot+1, y=df.SD3.loc[months_to_plot], text="3", showarrow=False
-    )
-
-    fig.add_scatter(
-        x=df.index,
-        y=df.SD2neg.loc[:months_to_plot].values,
-        mode="lines",
-        name="-2",
-        line={"color": "rgba(52, 152, 219, 0.5)"},
-        showlegend=False,
-    )
-    fig.add_annotation(
-        x=months_to_plot+1, y=df.SD2neg.loc[months_to_plot], text="-2", showarrow=False
-    )
-
-    fig.add_scatter(
-        x=df.index,
-        y=df.SD2.loc[:months_to_plot].values,
-        mode="lines",
-        name="2",
-        line={"color": "rgba(52, 152, 219, 0.5)"},
-        showlegend=False,
-    )
-    fig.add_annotation(
-        x=months_to_plot+1, y=df.SD2.loc[months_to_plot], text="2", showarrow=False
-    )
-
-    fig.add_scatter(
-        x=df.index,
-        y=df.SD0.loc[:months_to_plot].values,
-        mode="lines",
-        name="0",
-        line={"color": "rgba(26, 188, 156, 0.5)"},
-        showlegend=False,
-    )
-    fig.add_annotation(
-        x=months_to_plot+1, y=df.SD0.loc[months_to_plot], text="0", showarrow=False
-    )
+    for curve, props in reference_curves.items():
+        fig.add_scatter(
+            x=df.index,
+            y=df[curve].loc[:months_to_plot].values,
+            mode="lines",
+            name=props['label'],
+            line={"color": props['color']},
+            showlegend=False,
+        )
+        fig.add_annotation(
+            x=months_to_plot+1,
+            y=df[curve].loc[months_to_plot],
+            text=props['label'],
+            showarrow=False
+        )
 
     # Dictionary for legend text
     legend = {
