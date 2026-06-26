@@ -1,3 +1,6 @@
+# 🎂 Aniversário
+
+```{raw} html
 <div id="bday-card" style="
     max-width: 620px; margin: 1rem auto; padding: 2rem 1.5rem;
     background: #f3fbf8; border: 1px solid #d4efe6; border-radius: 18px;
@@ -99,3 +102,4 @@
   setInterval(tick, 1000);
 })();
 </script>
+```
